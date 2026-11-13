@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<title>Craton Ops - Connect QuickBooks</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+<h1>Almost connected</h1>
+<p id="msg">Copy the address below and paste it into the Craton Ops terminal window that is waiting for it.</p>
+<textarea id="url" rows="5" style="width:100%" readonly></textarea>
+<p><button id="copy" type="button">Copy</button> <span id="done"></span></p>
+<p>This page does not store or send anything. The code in the address works only once and only with Babylon's app secret.</p>
+</main>
+<script>
+var u = window.location.href;
+var box = document.getElementById("url");
+box.value = u;
+if (u.indexOf("error=") !== -1) { document.getElementById("msg").textContent = "QuickBooks did not connect. Paste the address below into the terminal so it can show the reason."; }
+document.getElementById("copy").onclick = function () {
+  box.select();
+  (navigator.clipboard ? navigator.clipboard.writeText(u) : Promise.reject()).then(function () {
+    document.getElementById("done").textContent = "Copied.";
+  }, function () { document.execCommand("copy"); document.getElementById("done").textContent = "Copied."; });
+};
+</script>
+</body>
+</html>
